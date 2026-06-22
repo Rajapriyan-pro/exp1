@@ -1,0 +1,388 @@
+<doctype.html>
+<html>
+<head>
+<style>
+  /* ── HERO ── */
+  .hero {   `
+    min-height: 100vh;
+    background: var(--black);
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1c1010 40%, #1a0d0d 100%);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+    background-size: 20px 20px;
+  }
+  .hero-glow {
+    position: absolute; top: 20%; right: 10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-glow2 {
+    position: absolute; bottom: 20%; left: 5%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(212,82,110,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 3rem; max-width: 700px;
+    animation: fadeUp 0.8s ease both;
+  }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+  .hero-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--gold);
+    display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;
+  }
+  .hero-label::before {
+    content: ''; display: block; width: 40px; height: 1px; background: var(--gold);
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.05;
+    color: white; margin-bottom: 1.5rem;
+  }
+  .hero-title em { color: var(--gold); font-style: italic; }
+  .hero-desc { color: rgba(255,255,255,0.65); font-size: 1.1rem; max-width: 480px; margin-bottom: 2.5rem; line-height: 1.8; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .hero-visual {
+    position: absolute; right: 0; bottom: 0; top: 0;
+    width: 45%;
+    background: linear-gradient(135deg, #2a1520, #1a1520);
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-icons {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    padding: 2rem 3rem 2rem 6rem;
+  }
+  .hero-icon-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px; padding: 2rem;
+    text-align: center;
+    transition: var(--transition);
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-icon-card:nth-child(1) { animation-delay: 0.1s; }
+  .hero-icon-card:nth-child(2) { animation-delay: 0.2s; margin-top: 2rem; }
+  .hero-icon-card:nth-child(3) { animation-delay: 0.3s; }
+  .hero-icon-card:hover { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+  .hero-icon-card i { font-size: 2.5rem; color: var(--gold); margin-bottom: 0.75rem; display: block; }
+  .hero-icon-card h3 { font-family: var(--font-display); color: white; font-size: 1rem; margin-bottom: 0.25rem; }
+  .hero-icon-card p { color: rgba(255,255,255,0.5); font-size: 0.78rem; }
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(255,255,255,0.4); font-size: 0.75rem; letter-spacing: 2px;
+    text-transform: uppercase; animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+  /* ── CATEGORIES ── */
+  .categories { padding: 6rem 3rem; background: var(--cream); }
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+  }
+  .category-card {
+    position: relative; aspect-ratio: 4/5; overflow: hidden;
+    border-radius: 4px; cursor: pointer;
+    text-decoration: none;
+  }
+  .category-card-bg {
+    position: absolute; inset: 0;
+    transition: transform 0.5s ease;
+  }
+  .category-card:hover .category-card-bg { transform: scale(1.05); }
+  .cat-costumes { background: linear-gradient(135deg, #2d1b35, #6b2d5e, #3d1a4a); }
+  .cat-makeup { background: linear-gradient(135deg, #3d1a2a, #8b3a5a, #d4526e); }
+  .cat-slippers { background: linear-gradient(135deg, #1a2d3d, #2d5a6b, #4a8fa8); }
+  .category-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 60%);
+    display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 2rem;
+  }
+  .cat-icon { font-size: 3rem; opacity: 0.6; margin-bottom: 0.5rem; }
+  .category-card-overlay h3 {
+    font-family: var(--font-display); font-size: 1.8rem;
+    color: white; margin-bottom: 0.25rem;
+  }
+  .category-card-overlay p { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-bottom: 1rem; }
+  .cat-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--gold); font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .category-card:hover .cat-link { gap: 0.75rem; }
+
+  /* ── PRODUCTS GRID ── */
+  .products-section { padding: 6rem 3rem; }
+  .products-section.dark { background: var(--off-black); }
+  .products-section.dark .section-title { color: white; }
+  .products-section.dark .section-subtitle { color: rgba(255,255,255,0.5); }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+  }
+
+  /* ── BANNER ── */
+  .promo-banner {
+    margin: 0 3rem 6rem;
+    background: linear-gradient(135deg, var(--black), #2a1520);
+    border-radius: 8px; overflow: hidden;
+    display: flex; align-items: center;
+    padding: 4rem; position: relative;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .promo-content { flex: 1; position: relative; z-index: 2; }
+  .promo-label { font-size: 0.75rem; letter-spacing: 3px; color: var(--rose); text-transform: uppercase; font-weight: 700; margin-bottom: 1rem; }
+  .promo-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem); color: white; margin-bottom: 1rem; }
+  .promo-title em { color: var(--gold); font-style: italic; }
+  .promo-desc { color: rgba(255,255,255,0.65); max-width: 500px; margin-bottom: 2rem; }
+  .promo-visual { position: absolute; right: 0; top: 0; bottom: 0; width: 40%; opacity: 0.15; }
+  .promo-visual-bg {
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 12px);
+  }
+
+  /* ── FEATURES ── */
+  .features { padding: 4rem 3rem; background: var(--black); }
+  .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .feature-item { text-align: center; }
+  .feature-icon { width: 56px; height: 56px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.3rem; color: var(--gold); }
+  .feature-item h4 { color: white; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .feature-item p { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+
+  @media (max-width: 768px) {
+    .hero-content { padding: 2rem 1.5rem; }
+    .hero-visual { display: none; }
+    .category-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .products-section { padding: 4rem 1.25rem; }
+    .promo-banner { margin: 0 1.25rem 4rem; padding: 2rem 1.5rem; }
+    .categories { padding: 4rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-label">The Glamour Collection 2025</div>
+    <h1 class="hero-title">
+      Dress Up.<br>
+      <em>Stand Out.</em><br>
+      Shine On.
+    </h1>
+    <p class="hero-desc">Discover premium costumes, professional makeup, and luxurious slippers — everything you need to look and feel extraordinary.</p>
+    <div class="hero-cta">
+      <a href="{% url 'shop' %}" class="btn btn-primary"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+      <a href="{% url 'shop' %}?type=costumes" class="btn btn-outline-gold">Explore Costumes</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-icons">
+      <div class="hero-icon-card">
+        <i class="fas fa-hat-wizard"></i>
+        <h3>Costumes</h3>
+        <p>Fantasy to reality</p>
+      </div>
+      <div class="hero-icon-card">
+        <i class="fas fa-magic"></i>
+        <h3>Makeup</h3>
+        <p>Pro-grade beauty</p>
+      </div>
+      <div class="hero-icon-card">
+        <i class="fas fa-shoe-prints"></i>
+        <h3>Slippers</h3>
+        <p>Comfort & style</p>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <i class="fas fa-chevron-down"></i>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- FEATURES BAR -->
+<div class="features">
+  <div class="features-grid">
+    <div class="feature-item">
+      <div class="feature-icon"><i class="fas fa-truck"></i></div>
+      <h4>Free Shipping</h4>
+      <p>On orders above ₹999</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon"><i class="fas fa-undo"></i></div>
+      <h4>Easy Returns</h4>
+      <p>30-day return policy</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+      <h4>Secure Payment</h4>
+      <p>100% safe checkout</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon"><i class="fas fa-headset"></i></div>
+      <h4>24/7 Support</h4>
+      <p>Always here to help</p>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories">
+  <div class="section-header">
+    <span class="section-label">Browse by Category</span>
+    <h2 class="section-title">What Are You Looking For?</h2>
+    <p class="section-subtitle">Three worlds of glamour, waiting for you to explore.</p>
+  </div>
+  <div class="category-grid">
+    <a href="{% url 'shop' %}?type=costumes" class="category-card">
+      <div class="category-card-bg cat-costumes"></div>
+      <div class="category-card-overlay">
+        <div class="cat-icon">🧙</div>
+        <h3>Costumes</h3>
+        <p>Bring any character to life with our premium collection</p>
+        <span class="cat-link">Shop Now <i class="fas fa-arrow-right"></i></span>
+      </div>
+    </a>
+    <a href="{% url 'shop' %}?type=makeup" class="category-card">
+      <div class="category-card-bg cat-makeup"></div>
+      <div class="category-card-overlay">
+        <div class="cat-icon">💄</div>
+        <h3>Makeup</h3>
+        <p>Professional-grade beauty products for every look</p>
+        <span class="cat-link">Shop Now <i class="fas fa-arrow-right"></i></span>
+      </div>
+    </a>
+    <a href="{% url 'shop' %}?type=slippers" class="category-card">
+      <div class="category-card-bg cat-slippers"></div>
+      <div class="category-card-overlay">
+        <div class="cat-icon">🥿</div>
+        <h3>Slippers</h3>
+        <p>Comfort meets style in every step you take</p>
+        <span class="cat-link">Shop Now <i class="fas fa-arrow-right"></i></span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+{% if featured %}
+<section class="products-section dark">
+  <div class="section-header">
+    <span class="section-label">Editor's Picks</span>
+    <h2 class="section-title">Featured Products</h2>
+    <p class="section-subtitle" style="color:rgba(255,255,255,0.5)">Our most loved, most worn, most gifted pieces.</p>
+  </div>
+  <div class="products-grid">
+    {% for product in featured %}
+    <div class="product-card">
+      <div class="product-img">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+        <div class="product-placeholder">
+          {% if product.category.category_type == 'costumes' %}🧙{% elif product.category.category_type == 'makeup' %}💄{% else %}🥿{% endif %}
+        </div>
+        {% endif %}
+        {% if product.discount_price %}<span class="product-badge">-{{ product.discount_percent }}%</span>{% endif %}
+        <div class="product-actions">
+          <a href="{% url 'toggle_wishlist' product.id %}" class="action-btn" title="Wishlist"><i class="fas fa-heart"></i></a>
+          <a href="{% url 'product_detail' product.slug %}" class="action-btn" title="Quick View"><i class="fas fa-eye"></i></a>
+          <a href="{% url 'add_to_cart' product.id %}" class="action-btn" title="Add to Cart"><i class="fas fa-shopping-bag"></i></a>
+        </div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">{{ product.category.name }}</span>
+        <a href="{% url 'product_detail' product.slug %}" class="product-name">{{ product.name }}</a>
+        <div class="product-price">
+          <span class="price-current">₹{{ product.effective_price }}</span>
+          {% if product.discount_price %}<span class="price-original">₹{{ product.price }}</span>{% endif %}
+        </div>
+        <a href="{% url 'add_to_cart' product.id %}">
+          <button class="product-add-btn"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <div class="promo-content">
+    <p class="promo-label"><i class="fas fa-fire"></i> Limited Time Offer</p>
+    <h2 class="promo-title">Get Up to <em>40% Off</em><br>on All Costumes</h2>
+    <p class="promo-desc">Dress up for any occasion — parties, Halloween, theatre, or just for fun. Premium quality at unbeatable prices.</p>
+    <a href="{% url 'shop' %}?type=costumes" class="btn btn-primary">Shop Costumes Now</a>
+  </div>
+  <div class="promo-visual"><div class="promo-visual-bg"></div></div>
+</div>
+
+<!-- NEW ARRIVALS -->
+{% if new_arrivals %}
+<section class="products-section">
+  <div class="section-header">
+    <span class="section-label">Just Dropped</span>
+    <h2 class="section-title">New Arrivals</h2>
+  </div>
+  <div class="products-grid">
+    {% for product in new_arrivals %}
+    <div class="product-card">
+      <div class="product-img">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+        <div class="product-placeholder">
+          {% if product.category.category_type == 'costumes' %}🧙{% elif product.category.category_type == 'makeup' %}💄{% else %}🥿{% endif %}
+        </div>
+        {% endif %}
+        <span class="product-badge" style="background:var(--gold);color:var(--black)">New</span>
+        <div class="product-actions">
+          <a href="{% url 'toggle_wishlist' product.id %}" class="action-btn" title="Wishlist"><i class="fas fa-heart"></i></a>
+          <a href="{% url 'product_detail' product.slug %}" class="action-btn" title="View"><i class="fas fa-eye"></i></a>
+          <a href="{% url 'add_to_cart' product.id %}" class="action-btn" title="Add to Cart"><i class="fas fa-shopping-bag"></i></a>
+        </div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">{{ product.category.name }}</span>
+        <a href="{% url 'product_detail' product.slug %}" class="product-name">{{ product.name }}</a>
+        <div class="product-price">
+          <span class="price-current">₹{{ product.effective_price }}</span>
+          {% if product.discount_price %}<span class="price-original">₹{{ product.price }}</span>{% endif %}
+        </div>
+        <a href="{% url 'add_to_cart' product.id %}">
+          <button class="product-add-btn"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div style="text-align:center;margin-top:3rem;">
+    <a href="{% url 'shop' %}" class="btn btn-dark">View All Products <i class="fas fa-arrow-right"></i></a>
+  </div>
+</section>
+</body>
+</html>
